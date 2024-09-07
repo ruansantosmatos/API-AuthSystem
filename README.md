@@ -91,7 +91,7 @@ Para visualizar e modificar o projeto, você precisará de:
 
 ## Documentação da API
 
-#### Cria uma nova conta
+### Cria uma nova conta
 
 ```http
   POST /user
@@ -101,24 +101,15 @@ Para visualizar e modificar o projeto, você precisará de:
 | :---------- | :--------- | :------- | :------- |
 | `{"nome": string, "email": string, "senha": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta.| Não
 
-### Retornos
+#### Retornos
 
-| Código| Valor | Descrição     |
+| Código | Valor | Descrição          |
 | :---------- | :--------- | :------- | 
-| 201 | `{ 'id': number, 'id_otp': number, 'email': string, 'token': string }` | Sucesso na chamada da rota | 
-| 400 | `O endereço de email encontra-se em uso!` | Caso o usuário tente criar uma mesma conta com o mesmo endereço de email | 
+| 201 | `{'id': number, 'id_otp': number, 'email': string, 'token': string}` | Sucesso na chamada da rota. | 
+| 400 | `{response: O endereço de email encontra-se em uso!}` | Caso o usuário tente criar uma mesma conta com o mesmo endereço de email. |
+| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). |
 
-#### Cria uma nova conta
-
-```http
-  POST /user
-```
-
-| Body   | Tipo       | Descrição | Token    
-| :---------- | :--------- | :--------------| :--------------|
-| `{"nome": string, "email": string, "senha": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta.| Não
-
-#### Gera uma sessão
+### Gera uma sessão
 
 ```http
   POST /session
@@ -128,7 +119,17 @@ Para visualizar e modificar o projeto, você precisará de:
 | :---------- | :--------- | :----------------| :----------------|
 | `{"email": string, "senha": string}` | `objeto` | Informações **obrigatórias** para gerar sessão | Não
 
-#### Gera uma sessão com a conta Google
+#### Retornos
+
+| Código | Valor | Descrição          |
+| :---------- | :--------- | :------- | 
+| 200 | `{'id': number, 'token': string}` | Sucesso na chamada da rota. | 
+| 400 | `{response: 'email incorreto'}` | Caso o usuário tente fazer login com determinado email não cadastrado. | 
+| 400 | `{response:'senha incorreta'}` | Caso a senha do usuário esteja incorreta. | 
+| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+
+
+### Gera uma sessão com a conta Google
 
 ```http
   POST /session/oauth
@@ -138,7 +139,13 @@ Para visualizar e modificar o projeto, você precisará de:
 | :---------- | :--------- | :---------------------------------- | :------ 
 | `{"id_conta": string, "nome": string, "email": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta utilizando a identificação do Google. | Não
 
-#### Criptografa informações e retorna os dados criptografados
+#### Retornos
+
+| 200 | `{'id': number, 'token': string}` | Sucesso na chamada da rota. | 
+| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+
+
+### Criptografa informações
 
 ```http
   POST /encrypt
@@ -147,6 +154,13 @@ Para visualizar e modificar o projeto, você precisará de:
 | Body   | Tipo   | Descrição | Token
 | :---------- | :--------- | :--- | :--- |
 | `{"data": {}}` | `objeto` | **Obrigatório** para criptografar as informações.| Sim
+
+#### Retornos
+
+| 200 | `{'data': string}` | Sucesso na chamada da rota. | 
+| 401 | `{'response': 'Tipo de autorização inválida!'}` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
+| 401 | `{'response': 'INVALID_TOKEN'}` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
+| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
 
 ## Middlewares
 
