@@ -108,7 +108,6 @@ Para visualizar e modificar o projeto, você precisará de:
 | 201 | `{ 'id': number, 'id_otp': number, 'email': string, 'token': string }` | Sucesso na chamada da rota | 
 | 400 | `O endereço de email encontra-se em uso!` | Caso o usuário tente criar uma mesma conta com o mesmo endereço de email | 
 
-
 #### Cria uma nova conta
 
 ```http
