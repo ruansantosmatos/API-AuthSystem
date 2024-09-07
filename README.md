@@ -1,6 +1,6 @@
 # API - AuthSystem  
 
-*API complementar ao projeto AuthSystem*, projetada para gerenciar o processo de autenticação e autorização de usuários em aplicações web e móveis. 
+**API complementar ao projeto AuthSystem**, projetada para gerenciar o processo de autenticação e autorização de usuários em aplicações web e móveis. 
 Esta API fornece um conjunto de endpoints que permitem a criação, verificação e gerenciamento de contas de usuários, garantindo que apenas usuários 
 autorizados possam acessar recursos protegidos da aplicação.
 
@@ -38,71 +38,121 @@ Para visualizar e modificar o projeto, você precisará de:
 
 ## Como Usar
 
-1. **Inicie um projeto Next**:
+1. **Clone este repositório**:
     ```bash
-    npx create-next-app@latest <NameApp>
+    git clone https://github.com/ruansantosmatos/API-AuthSystem.git
     ```
 
-2. **Clone este repositório**:
+2. **Gere o executável da aplicação com o comando:**:
     ```bash
-    git clone https://github.com/ruansantosmatos/AuthSystem.git
+    tsc
     ```
 
-3. **Inicie o prompt de comando no diretório do projeto e execute**:
+3. **Atualize as dependências com o comando:**:
+    ```bash
+    npm install
+    ```
+
+5. **Execute o projeto com o comando:**:
     ```bash
     npm run dev
     ```
 
-4. **API AuthSystem**:
-    - Torna-se necessário a utilização da API backend, desenvolvida para garantir a interação
-    com o cliente, assim como manipulação das informações e interações da aplicação. Para mais detalhes
-    a cerca da documentação e endpoints acesse: 
-
-5. **Personalize o estilo**:
-    - Para aplicar modificações de estilo global, edite o arquivo `styles/globals.css` conforme necessário.
-    Nas modificações de componentes, páginas, dentre outros, torna-se necessário a utilização do Tailwind CSS
-
 ## Estrutura do Projeto
 
 ```plaintext
-├── public                   # Diretório que possui utilitários gerais (icones, imagens, dentre outros).
+├── build                    # Diretório contendo os arquivos gerado após a compilação do código typescript.
 
-├── src
-    ├── api                  # Diretório responsável por definir os endpoints da API para consumo.
-        └── config           # Arquivo contendo as configurações da API.
-        └── models           # Tipagem estrutural das entendidades da base de dados.
-    
-    ├── app                  # Diretório principal contendo todas as rotas e páginas da aplicação.
-    
-    ├── components           # Diretório contendo componentes globais e de bibliotecas.
-        └── ui               # Diretório gerado para componentes tailwind CSS da biblioteca Sadcn UI.
-    ├── lib                  # Diretório que possui componente base para a utilização do Sadcn UI.
-    
-    ├── services             # Diretório responsável por conter funções que podem ser utilizadas de maneiras gerais.
-    
-    ├── styles               # Diretório que possui os arquivos de estilos gerais da aplicação.
+├── node_modules             # Diretório gerado pelo Node que possui todas as dependencias do projeto (bibliotecas, tipagem, dentre outras).
 
+├── src                      # Diretório principal que possui toda a estrutura do código.
+    
+    ├── controllers          # Diretório que possui funções de manipulação das rotas da API.
+    
+    ├── database             # Diretório que possui a estrutura de configuração, conexão e manipulação da base de dados.
+        └── config           # Diretório responsável por configurar propiedades de conexão com a base de dados.
+        └── models           # Diretório responsável por mapear a estrutura, tipos e atributos das entidades do banco de dados (tabelas, colunas, etc..). 
+        └── providers        # Diretório responsável por possuir funções de manipulação das entidades da base de dados
+        └── types            # Diretório responsável por configurar o query build (knex) com o diretório "models".
+        └── index.ts         # Arquivo responsável por inicializar a conexão com a base de dados.
+    
+    ├── middlewares          # Diretório responsável por possuir todos os middlewares utilizados nas rotas da API.
+       
+    ├── routes               # Diretório responsável por possuir todas as rotas da aplicação.
+
+    ├── server               # Diretório responsável por pela criação do servidor HTTP, consumo das rotas e middlewares
+
+    ├── server               # Diretório responsável por possuir funções com diferentes funcionalidades que podem ser utilizadas na aplicação.
+
+    └── index.ts             # Arquivo responsável por inicializar o servidor.
+
+├── types                    # Diretório que possui a tipagem global para o controle e reconhecimento das variáves de ambiente.
 ```
 
-## Demonstração
+## Documentação da API
 
-### Login/Logout
-https://github.com/user-attachments/assets/0ae13b46-1598-4ab3-987f-f368d5ceb6f4
+#### Cria uma nova conta
 
-### Criação de Conta
-https://github.com/user-attachments/assets/c0d11adc-ef6d-4316-a2e9-1aa3f704dd8c
+```http
+  POST /user
+```
 
-### Redefinição de Senha
-https://github.com/user-attachments/assets/8fbe26b1-b185-4fd7-bc12-f1c55986730b
+| Body   | Tipo       | Descrição                             |
+| :---------- | :--------- | :---------------------------------- |
+| `{"nome": string, "email": string, "senha": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta.
 
-### Código OTP
-https://github.com/user-attachments/assets/c2c53b74-b0e2-4348-bccd-74d8868db29b
+#### Gera uma sessão
 
-## Observações
+#### Cria uma nova conta
 
-1. Para executar o processo de login com a conta google, torna-se necessário a utilização do 
-código das crendenciais de acesso para a aplicação, consulte a documentação oficial:
-[Google Identity](https://developers.google.com/identity/protocols/oauth2?hl=pt-br)
+```http
+  POST /user
+```
+
+| Body   | Tipo       | Descrição | Token    
+| :---------- | :--------- | :--------------| :--------------|
+| `{"nome": string, "email": string, "senha": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta.| Não
+
+#### Gera uma sessão
+
+```http
+  POST /session
+```
+
+| Body   | Tipo       | Descrição | Token           
+| :---------- | :--------- | :----------------| :----------------|
+| `{"email": string, "senha": string}` | `objeto` | Informações **obrigatórias** para gerar sessão | Não
+
+#### Gera uma sessão com a conta Google
+
+```http
+  POST /session/oauth
+```
+
+| Body   | Tipo       | Descrição                                | Token |
+| :---------- | :--------- | :---------------------------------- | :------ 
+| `{"id_conta": string, "nome": string, "email": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta utilizando a identificação do Google. | Não
+
+#### Criptografa informações e retorna os dados criptografados
+
+```http
+  POST /encrypt
+```
+
+| Body   | Tipo   | Descrição | Token
+| :---------- | :--------- | :--- | :--- |
+| `{"data": {}}` | `objeto` | **Obrigatório** para criptografar as informações.| Sim
+
+## Middlewares
+
+- Auth: Responsável por autenticar, validar e verificar tokens enviados nas requisições.
+
+- index: Arquivo responsável por exportar todos os middlewares, servindo como referência na importação em outros arquivos.
+
+- JWTServices: Responsável por criar um novo JWT ou verificar se determinado token possui a estrutura válida.
+
+- Validation: Responsável por verificar se as informações da requisição, são exatamente as mesmas informações
+que determinada rota necessita, seja essas informações estando no **body, params, header ou query**.
 
 ## Contribuições
 Contribuições são bem-vindas! Se você encontrar algum problema ou tiver ideias para melhorias, 
