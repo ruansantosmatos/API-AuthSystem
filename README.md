@@ -97,11 +97,17 @@ Para visualizar e modificar o projeto, você precisará de:
   POST /user
 ```
 
-| Body   | Tipo       | Descrição                             |
-| :---------- | :--------- | :---------------------------------- |
-| `{"nome": string, "email": string, "senha": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta.
+| Body   | Tipo       | Descrição     | Token
+| :---------- | :--------- | :------- | :------- |
+| `{"nome": string, "email": string, "senha": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta.| Não
 
-#### Gera uma sessão
+### Retornos
+
+| Código| Valor | Descrição     |
+| :---------- | :--------- | :------- | 
+| 201 | `{ 'id': number, 'id_otp': number, 'email': string, 'token': string }` | Sucesso na chamada da rota | 
+| 400 | `O endereço de email encontra-se em uso!` | Caso o usuário tente criar uma mesma conta com o mesmo endereço de email | 
+
 
 #### Cria uma nova conta
 
