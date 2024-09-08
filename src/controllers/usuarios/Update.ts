@@ -33,7 +33,7 @@ export const Update = async (req: Request<{}, {}, IPropsBody>, res: Response) =>
             res.status(StatusCodes.OK).json({ 'response': 'Senha redefinida com sucesso!' })
         }
         else {
-            res.status(StatusCodes.OK).json({ 'response': 'usuário não encontrado!' })
+            res.status(StatusCodes.BAD_REQUEST).json({ 'response': 'usuário não encontrado!' })
         }
     }
     catch (error) {

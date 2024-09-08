@@ -71,7 +71,7 @@ Para visualizar e modificar o projeto, você precisará de:
     
     ├── database             # Diretório que possui a estrutura de configuração, conexão e manipulação da base de dados.
         └── config           # Diretório responsável por configurar propiedades de conexão com a base de dados.
-        └── models           # Diretório responsável por mapear a estrutura, tipos e atributos das entidades do banco de dados (tabelas, colunas, etc..). 
+        └── models           # Diretório responsável por mapear a estrutura, tipos e atributos das entidades do banco de dados (tabelas, colunas, etc). 
         └── providers        # Diretório responsável por possuir funções de manipulação das entidades da base de dados
         └── types            # Diretório responsável por configurar o query build (knex) com o diretório "models".
         └── index.ts         # Arquivo responsável por inicializar a conexão com a base de dados.
@@ -91,6 +91,26 @@ Para visualizar e modificar o projeto, você precisará de:
 
 ## Documentação da API
 
+
+### Busca um usuário pelo ID
+
+```http
+  GET /password/1
+```
+
+| Params   | Tipo   | Descrição | Token
+| :---------- | :--------- | :--- | :--- |
+| `id_usuario` | `number` | **Obrigatório** para buscar as informações do usuário pelo ID.| Sim
+
+#### Retornos
+
+| 200 | `{ 'response': [{ 'id': number, 'nome': string, 'email:' string, 'senha:' string }] }` | Sucesso na chamada da rota. | 
+| 400 | `{ 'response': 'usuário não localizado!' }` | Caso o id_usuario não corresponda a algum registro na base de dados. |
+| 401 | `{ 'response': 'Tipo de autorização inválida!' }` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
+| 401 | `{ 'response': 'INVALID_TOKEN' }` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
+| 500 | `{ 'response': string }` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+
+
 ### Cria uma nova conta
 
 ```http
@@ -99,15 +119,15 @@ Para visualizar e modificar o projeto, você precisará de:
 
 | Body   | Tipo       | Descrição     | Token
 | :---------- | :--------- | :------- | :------- |
-| `{"nome": string, "email": string, "senha": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta.| Não
+| `{ "nome": string, "email": string, "senha": string }` | `objeto` | **Obrigatório** para a criação de uma nova conta.| Não
 
 #### Retornos
 
 | Código | Valor | Descrição          |
 | :---------- | :--------- | :------- | 
-| 201 | `{'id': number, 'id_otp': number, 'email': string, 'token': string}` | Sucesso na chamada da rota. | 
-| 400 | `{response: O endereço de email encontra-se em uso!}` | Caso o usuário tente criar uma mesma conta com o mesmo endereço de email. |
-| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). |
+| 201 | `{ 'id': number, 'id_otp': number, 'email': string, 'token': string}` | Sucesso na chamada da rota. | 
+| 400 | `{ 'response': O endereço de email encontra-se em uso! }` | Caso o usuário tente criar uma mesma conta com o mesmo endereço de email. |
+| 500 | `{ 'response': string }` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). |
 
 ### Gera uma sessão
 
@@ -117,16 +137,16 @@ Para visualizar e modificar o projeto, você precisará de:
 
 | Body   | Tipo       | Descrição | Token           
 | :---------- | :--------- | :----------------| :----------------|
-| `{"email": string, "senha": string}` | `objeto` | Informações **obrigatórias** para gerar sessão | Não
+| `{ "email": string, "senha": string }` | `objeto` | Informações **obrigatórias** para gerar sessão | Não
 
 #### Retornos
 
 | Código | Valor | Descrição          |
 | :---------- | :--------- | :------- | 
-| 200 | `{'id': number, 'token': string}` | Sucesso na chamada da rota. | 
-| 400 | `{response: 'email incorreto'}` | Caso o usuário tente fazer login com determinado email não cadastrado. | 
-| 400 | `{response:'senha incorreta'}` | Caso a senha do usuário esteja incorreta. | 
-| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+| 200 | `{ 'id': number, 'token': string }` | Sucesso na chamada da rota. | 
+| 400 | `{ 'response': 'email incorreto' }` | Caso o usuário tente fazer login com determinado email não cadastrado. | 
+| 400 | `{ 'response':'senha incorreta' }` | Caso a senha do usuário esteja incorreta. | 
+| 500 | `{ 'response': string }` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
 
 
 ### Gera uma sessão com a conta Google
@@ -137,12 +157,12 @@ Para visualizar e modificar o projeto, você precisará de:
 
 | Body   | Tipo       | Descrição                                | Token |
 | :---------- | :--------- | :---------------------------------- | :------ 
-| `{"id_conta": string, "nome": string, "email": string}` | `objeto` | **Obrigatório** para a criação de uma nova conta utilizando a identificação do Google. | Não
+| `{ "id_conta": string, "nome": string, "email": string }` | `objeto` | **Obrigatório** para a criação de uma nova conta utilizando a identificação do Google. | Não
 
 #### Retornos
 
-| 200 | `{'id': number, 'token': string}` | Sucesso na chamada da rota. | 
-| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+| 200 | `{ 'id': number, 'token': string }` | Sucesso na chamada da rota. | 
+| 500 | `{ 'response': string }` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
 
 
 ### Criptografa informações
@@ -153,14 +173,52 @@ Para visualizar e modificar o projeto, você precisará de:
 
 | Body   | Tipo   | Descrição | Token
 | :---------- | :--------- | :--- | :--- |
-| `{"data": {}}` | `objeto` | **Obrigatório** para criptografar as informações.| Sim
+| `{ "data": {} }` | `objeto` | **Obrigatório** para criptografar as informações.| Sim
 
 #### Retornos
 
-| 200 | `{'data': string}` | Sucesso na chamada da rota. | 
-| 401 | `{'response': 'Tipo de autorização inválida!'}` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
-| 401 | `{'response': 'INVALID_TOKEN'}` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
-| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+| 200 | `{ 'data': string }` | Sucesso na chamada da rota. | 
+| 401 | `{ 'response': 'Tipo de autorização inválida!' }` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
+| 401 | `{ 'response': 'INVALID_TOKEN' }` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
+| 500 | `{ 'response': string }` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+
+
+### Descriptografa informações
+
+```http
+  POST /decrypt
+```
+
+| Body   | Tipo   | Descrição | Token
+| :---------- | :--------- | :--- | :--- |
+| `{ "data": string }` | `string` | **Obrigatório** para descriptografar uma string criptografada.| Sim
+
+#### Retornos
+
+| 200 | `{ 'data': any }` | Sucesso na chamada da rota. | 
+| 401 | `{ 'response': 'Tipo de autorização inválida!' }` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
+| 401 | `{ 'response': 'INVALID_TOKEN' }` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
+| 500 | `{ 'response': string }` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+
+
+### Redefine a senha do usuário
+
+```http
+  PATCH /password/reset
+```
+
+| Body   | Tipo   | Descrição | Token
+| :---------- | :--------- | :--- | :--- |
+| `{ "id_usuario": number, "senha": string }` | `objeto` | **Obrigatório** para redefinir a senha do usuário.| Sim
+
+#### Retornos
+
+| 200 | `{ 'response': 'Senha redefinida com sucesso!' }` | Sucesso na chamada da rota. | 
+| 400 | `{ 'response': 'usuário não encontrado!' }` | Caso o id_usuario não corresponda a algum registro na base de dados. |
+| 401 | `{ 'response': 'Tipo de autorização inválida!' }` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
+| 401 | `{ 'response': 'INVALID_TOKEN' }` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
+| 500 | `{ 'response': string }` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+
 
 ## Middlewares
 
