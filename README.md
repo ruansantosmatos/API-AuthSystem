@@ -453,7 +453,7 @@ que determinada rota necessita, seja essas informações estando no **body, para
 
 ## Base de Dados
 
-A base de dados escolhida para o desenvolvimento do projeto foi o SGBD MySQL. Para a manipulação
+A base de dados escolhida para o desenvolvimento do projeto foi o SGBD **MySQL**. Para a manipulação
 das informações do cliente, consultas, alteração de dados, dentre outras operações, torna-se 
 necessário a criação das seguintes entidades:
 
