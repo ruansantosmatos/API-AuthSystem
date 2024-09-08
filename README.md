@@ -402,7 +402,7 @@ Para visualizar e modificar o projeto, você precisará de:
 
 ## Variáveis de Ambiente
 
-Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu arquivo `.env`
+Para a execução do projeto é necessário adicionar as respectivas variáveis de ambiente no seu arquivo `.env`
 
 - `USER`: **Usuário da base de dados**
 
@@ -422,13 +422,13 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 
 - `EXPIRES_IN`: **Tempo de vida do JTW**
 
-- `SMTP_HOST`: **Valor padrão utilizado na biblioteca Nodemail**
+- `SMTP_HOST`: **Valor padrão utilizado na biblioteca Nodemailer**
 
-- `SMTP_PORT`: **Valor padrão utilizado na biblioteca Nodemail**
+- `SMTP_PORT`: **Valor padrão utilizado na biblioteca Nodemailer**
 
-- `ACCOUNT_EMAIL`: **Email utilizado para envio das messagens pelo Nodemail**
+- `ACCOUNT_EMAIL`: **Email utilizado para envio das messagens pelo Nodemailer**
 
-- `PASSWORD_EMAIL` **Senha do email utilizado para envio das messagens pelo Nodemail**
+- `PASSWORD_EMAIL` **Senha do email utilizado para envio das messagens pelo Nodemailer**
 
 - `SECRET_KEY`: **Segredo de criptografia utilizado pelo services "CryptoData"**
 
@@ -451,12 +451,19 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 - Validation: Responsável por verificar se as informações da requisição, são exatamente as mesmas informações
 que determinada rota necessita, seja essas informações estando no **body, params, header ou query**.
 
+## Observações:
+
+1. As variáveis de ambiente: `USER`, `PASSWORD`, `DATABASE`, `HOST`, `DIALECT` e `PORT_DATABASE`,
+devem ser configuradas de acordo com a documentação oficial do query build knex. Para mais informações
+acesse: https://knexjs.org/guide/
+
+2. As variáveis de ambiente: `SMTP_HOST`, `SMTP_PORT`, `ACCOUNT_EMAIL` e `PASSWORD_EMAIL`,
+devem ser configuradas de acordo com a documentação oficial da biblioteca **Nodemailer**, para
+mais informações consulte: https://nodemailer.com/about/. 
+
 ## Contribuições
 Contribuições são bem-vindas! Se você encontrar algum problema ou tiver ideias para melhorias,
 sinta-se à vontade para enviar um pull request.
 
 ## Licença
 Este projeto está licenciado sob a Licença MIT.
-
-
-
