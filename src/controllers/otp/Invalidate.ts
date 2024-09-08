@@ -24,6 +24,5 @@ export const Invalidate = async (req: Request<{}, {}, IPropsBody>, res: Response
     }
     catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ 'response': 'falha na invalidação do código.' })
-        console.log('error', error)
     }
 }
