@@ -454,7 +454,7 @@ que determinada rota necessita, seja essas informações estando no **body, para
 ## Observações:
 
 1. As variáveis de ambiente: `USER`, `PASSWORD`, `DATABASE`, `HOST`, `DIALECT` e `PORT_DATABASE`,
-devem ser configuradas de acordo com a documentação oficial do query build knex. Para mais informações
+devem ser configuradas de acordo com a documentação oficial do query build **Knex**. Para mais informações
 acesse: https://knexjs.org/guide/
 
 2. As variáveis de ambiente: `SMTP_HOST`, `SMTP_PORT`, `ACCOUNT_EMAIL` e `PASSWORD_EMAIL`,
