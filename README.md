@@ -451,6 +451,68 @@ Para a execução do projeto é necessário adicionar as respectivas variáveis 
 - Validation: Responsável por verificar se as informações da requisição, são exatamente as mesmas informações
 que determinada rota necessita, seja essas informações estando no **body, params, header ou query**.
 
+## Base de Dados
+
+A base de dados escolhida para o desenvolvimento do projeto foi o SGBD MySQL. Para a manipulação
+das informações do cliente, consultas, alteração de dados, dentre outras operações, torna-se 
+necessário a criação das seguintes entidades:
+
+- auth
+
+```bash
+    CREATE DATABASE auth;
+```
+
+- usuarios
+
+```bash
+    CREATE TABLE usuarios(
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      nome VARCHAR(80) NOT NULL,
+      email VARCHAR(80) NOT NULL,
+      senha VARCHAR(100) NOT NULL
+    );
+```
+
+- senhas
+
+```bash
+    CREATE TABLE senhas( 
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      id_usuario INT NOT NULL,
+      email VARCHAR(80) NOT NULL,
+      token VARCHAR(150) NOT NULL,
+      criacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+      valido BOOLEAN NOT NULL DEFAULT TRUE,
+      FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+    );
+```
+
+ - otp
+
+```bash
+    CREATE TABLE otp(
+      id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+      codigo VARCHAR(4) NOT NULL,
+      email VARCHAR(80) NOT NULL,
+      valido BOOLEAN NOT NULL DEFAULT TRUE,
+      criacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP()
+    );
+```
+
+- contas
+
+```bash
+    CREATE TABLE contas(
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      id_usuario INT NOT NULL,
+      codigo VARCHAR(4) NOT NULL,
+      autenticada BOOLEAN NOT NULL DEFAULT TRUE,
+      validacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+      FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+    );
+```
+
 ## Observações:
 
 1. As variáveis de ambiente: `USER`, `PASSWORD`, `DATABASE`, `HOST`, `DIALECT` e `PORT_DATABASE`,
