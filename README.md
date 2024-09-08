@@ -209,6 +209,26 @@ Para visualizar e modificar o projeto, você precisará de:
 | 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
 
 
+### **Valida Token de Redefinição de Senha**
+
+```http
+  PATCH /validate/token
+```
+
+| Body   | Tipo   | Descrição | Token
+| :---------- | :--------- | :--- | :--- |
+| `{ "id": number }` | `objeto` | **Obrigatório** para atualizar o token de redefinição de senha.| Sim
+
+#### Retornos
+
+| Código | Valor | Descrição          |
+| :---------- | :--------- | :------- | 
+| 200 | `{'response': 'autenticação realizada com sucesso!'}` | Sucesso na chamada da rota. | 
+| 401 | `{'response': 'Tipo de autorização inválida!'}` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
+| 401 | `{'response': 'INVALID_TOKEN'}` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
+| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+
+
 ### **Redefine a senha do usuário**
 
 ```http
@@ -225,6 +245,47 @@ Para visualizar e modificar o projeto, você precisará de:
 | :---------- | :--------- | :------- | 
 | 200 | `{'response': 'Senha redefinida com sucesso!'}` | Sucesso na chamada da rota. | 
 | 400 | `{'response': 'usuário não encontrado!'}` | Caso o id_usuario não corresponda a algum registro na base de dados. |
+| 401 | `{'response': 'Tipo de autorização inválida!'}` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
+| 401 | `{'response': 'INVALID_TOKEN'}` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
+| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+
+
+### **Gera o link de redefinição de senha**
+
+```http
+  POST /forgot
+```
+
+| Body   | Tipo   | Descrição | Token
+| :---------- | :--------- | :--- | :--- |
+| `{ "email": string }` | `objeto` | **Obrigatório** para gerar o link de redefinição de senha e enviar para o email do usuário.| Sim
+
+#### Retornos
+
+| Código | Valor | Descrição          |
+| :---------- | :--------- | :------- | 
+| 201 | `{'response': 'Link de redefinição de senha enviado com sucesso!'}` | Sucesso na chamada da rota. | 
+| 400 | `{'response': 'O endereço de email não localizado!'}` | Caso o email do usuário não corresponda a algum registro na base de dados. |
+| 401 | `{'response': 'Tipo de autorização inválida!'}` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
+| 401 | `{'response': 'INVALID_TOKEN'}` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
+| 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
+
+
+### **Busca informações de validade de determinado token**
+
+```http
+  GET /verify/token/<token>
+```
+
+| Params   | Tipo   | Descrição | Token
+| :---------- | :--------- | :--- | :--- |
+| `token` | `string` | **Obrigatório** para gerar o link de redefinição de senha e enviar para o email do usuário.| Sim
+
+#### Retornos
+
+| Código | Valor | Descrição          |
+| :---------- | :--------- | :------- | 
+| 200 | `{'response': [{ 'id': number, 'criacao': string, 'valido': boolean }]}` | Sucesso na chamada da rota. | 
 | 401 | `{'response': 'Tipo de autorização inválida!'}` | Tipo de autorização diferente de *Bearer* no envio da requisição. |
 | 401 | `{'response': 'INVALID_TOKEN'}` | Token inválido, estrutura comprometida, tempo de vida esgotado, etc.. | 
 | 500 | `{'response': string}` | Em caso de erro interno do servidor, ou falha na base de dados (conexão, ausência de tabela, etc..). | 
